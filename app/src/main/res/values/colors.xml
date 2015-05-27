@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="main_orange">#fff5b800</color>
+    <color name="main_blue">#ff012456</color>
+    <color name="main_dark_orange">#ffe69a00</color>
+    <color name="main_dark_blue">#ff000a17</color>
+    <color name="main_dark">#ff333333</color>
+
+    <color name="balance_light">#ffffffff</color>
+    <color name="bg_warning">#ffe53935</color>
+    <color name="gradient_start">#22000000</color>
+
+    <color name="widget_btc_value">#ffffffff</color>
+    <color name="widget_fiat_value">#ffdddddd</color>
+    <color name="widget_fiat_name">#ffbbbbbb</color>
+    <color name="widget_bg_focus">#40000000</color>
+
+	<!-- foreground -->
+	<color name="fg_significant">#ff000000</color>
+	<color name="fg_less_significant">#ff666666</color>
+	<color name="fg_insignificant">#ffcccccc</color>
+	<color name="fg_error">#fff04000</color>
+
+	<!-- background -->
+	<color name="bg_bright">#ffffffff</color>
+	<color name="bg_less_bright">#ffe8e8f0</color>
+	<color name="bg_panel">#ffd8d8e0</color>
+	<color name="bg_form">@android:color/white</color>
+	<color name="bg_list">#40ffffff</color>
+	<color name="bg_list_selected">#40808090</color>
+	<color name="bg_dialog_title">@android:color/transparent</color>
+
+	<!-- password strength -->
+	<color name="fg_password_strength_weak">#fff04000</color>
+	<color name="fg_password_strength_fair">#ffe69a00</color>
+	<color name="fg_password_strength_strong">#ff00a050</color>
+
+	<!-- scanner -->
+	<color name="scan_mask">#60000000</color>
+	<color name="scan_laser">#ffcc0000</color>
+	<color name="scan_dot">#ffe69a00</color>
+	<color name="scan_result_view">#b0000000</color>
+	<color name="scan_result_dots">#c099cc00</color>
+
+</resources>

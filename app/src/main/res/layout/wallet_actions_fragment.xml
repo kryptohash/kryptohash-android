@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+	android:divider="@drawable/divider_dark"
+	android:dividerPadding="8dp"
+    android:background="@color/main_blue"
+	android:measureWithLargestChild="true"
+	android:orientation="horizontal" >
+
+	<Button
+		android:id="@+id/wallet_actions_request"
+		style="@style/My.Widget.Button.Borderless"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:singleLine="true"
+        android:background="@drawable/button_white_radius"
+		android:text="@string/button_request_coins"
+		android:textAllCaps="true"
+		android:textColor="@color/main_dark"
+		android:textSize="@dimen/font_size_tiny"
+		android:textStyle="bold"
+        android:layout_weight="1" />
+
+	<Button
+		android:id="@+id/wallet_actions_send"
+		style="@style/My.Widget.Button.Borderless"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:singleLine="true"
+        android:background="@drawable/button_white_radius"
+		android:text="@string/button_send_coins"
+		android:textAllCaps="true"
+		android:textColor="@color/main_dark"
+		android:textSize="@dimen/font_size_tiny"
+		android:textStyle="bold"
+        android:layout_weight="1" />
+
+</LinearLayout>

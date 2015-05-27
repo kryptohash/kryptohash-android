@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<item
+		android:id="@+id/send_coins_options_scan"
+		android:icon="@drawable/ic_action_camera"
+		app:showAsAction="always|withText"
+		android:title="@string/button_scan"/>
+    <item
+		android:id="@+id/send_coins_options_priority"
+		android:checkable="true"
+		app:showAsAction="never"
+		android:title="@string/send_coins_options_priority"/>
+	<item
+		android:id="@+id/send_coins_options_empty"
+		app:showAsAction="never"
+		android:title="@string/send_coins_options_empty"/>
+
+</menu>

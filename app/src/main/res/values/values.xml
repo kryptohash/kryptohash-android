@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+	<string name="symbol_to">→</string>
+	<string name="symbol_from">←</string>
+	<string name="symbol_internal">⇄</string>
+
+	<string-array name="preferences_precision_values">
+		<item>5</item>
+		<item>4</item>
+		<item>3</item>
+		<item>2/3</item>
+	</string-array>
+	<string-array name="preferences_precision_labels">
+		<item>KHC, 5 digits</item>
+		<item>KHC, 4 digits</item>
+		<item>KHC, 3 digits</item>
+		<item>mKHC, 2 digits</item>
+	</string-array>
+
+</resources>

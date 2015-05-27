@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" >
+
+	<ImageView
+		android:id="@+id/bitcoin_address_qr"
+		android:layout_width="@dimen/wallet_address_qr_size"
+		android:layout_height="@dimen/wallet_address_qr_size"
+		android:layout_gravity="center"
+		android:background="@android:color/white"
+		android:contentDescription="@string/action_show_qr"
+        android:padding="5dp"
+		android:focusable="true"
+		android:scaleType="centerInside" />
+
+</FrameLayout>
