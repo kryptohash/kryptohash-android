@@ -60,7 +60,7 @@ dependencies {
     compile 'com.android.support:support-v13:22.1.1'
 
     compile 'com.madgag.spongycastle:core:1.51.0.0'
-    compile 'com.google.guava:guava:16.0.1'
+    compile 'com.google.guava:guava:18.0'
     compile 'net.jcip:jcip-annotations:1.0'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     compile 'com.lambdaworks:scrypt:1.4.0'

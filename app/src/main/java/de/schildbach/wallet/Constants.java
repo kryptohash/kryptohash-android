@@ -109,7 +109,7 @@ public final class Constants
 	public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
 
 	/** Donation address for tip/donate action. */
-	public static final String DONATION_ADDRESS = "1BeerDAv8bRARhpF1RbF15haQhKfbaRakq";
+	public static final String DONATION_ADDRESS = "KNPur2PJU6U1kekkoy54ymhKScCiXmac3f";
 
 	/** Recipient e-mail address for reports. */
 	public static final String REPORT_EMAIL = "android@kryptohash.org";
@@ -132,8 +132,8 @@ public final class Constants
 
 	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(3).optionalDecimals();
 
-	public static final String SOURCE_URL = "https://github.com/kryptohash/kryptohash-wallet-android";
-	public static final String BINARY_URL = "https://github.com/kryptohash/kryptohash-wallet-android/releases";
+	public static final String SOURCE_URL = "https://github.com/kryptohash/kryptohash-android";
+	public static final String BINARY_URL = "https://github.com/kryptohash/kryptohash-android/releases";
 	public static final String MARKET_APP_URL = "market://details?id=%s";
 	public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
 
@@ -146,7 +146,7 @@ public final class Constants
 	public static final int SDK_JELLY_BEAN = 16;
 	public static final int SDK_JELLY_BEAN_MR2 = 18;
 
-	public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+	public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.JELLY_BEAN;
 
 	public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Constants.SDK_JELLY_BEAN
 			&& Build.VERSION.RELEASE.startsWith("4.1.1");
