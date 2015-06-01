@@ -190,7 +190,7 @@ public class ExchangeRatesProvider extends ContentProvider
 
 				final ExchangeRate exchangeRateToCache = bestExchangeRate(config.getExchangeCurrencyCode());
 				if (exchangeRateToCache != null) {
-					khc_btc = getKHCRateFromTicker(exchangeRateToCache);
+					khc_btc = getKHCRateFromTicker();
 					if (khc_btc < 0.0) {
 						// If we didn't obtain the KHC ticker, retry after 2 seconds.
 						try {
@@ -198,7 +198,7 @@ public class ExchangeRatesProvider extends ContentProvider
 						} catch (InterruptedException e) {
 							log.warn("sleep failed: {}", e);
 						}
-						khc_btc = getKHCRateFromTicker(exchangeRateToCache);
+						khc_btc = getKHCRateFromTicker();
 					}
 					if (khc_btc >= 0.0) {
 						khcRate = getKHCRate(exchangeRateToCache, khc_btc);
@@ -420,7 +420,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		return null;
 	}
 
-	private EmpoExTicker tickerFetchKHC() throws Exception {
+	private EmpoExTicker fetchAll() throws Exception {
 		Exchange exchange = ExchangeFactory.INSTANCE.createExchange(EmpoExExchange.class.getName());
 		EmpoExMarketDataServiceRaw raw = new EmpoExMarketDataServiceRaw(exchange);
 		List<EmpoExTicker> tickers = raw.getEmpoExTickers();
@@ -432,6 +432,12 @@ public class ExchangeRatesProvider extends ContentProvider
 		return value;
 	}
 
+	private Ticker fetchKHCticker() throws Exception {
+		Exchange exchange = ExchangeFactory.INSTANCE.createExchange(EmpoExExchange.class.getName());
+		PollingMarketDataService marketDataService = exchange.getPollingMarketDataService();
+		return marketDataService.getTicker(new CurrencyPair("KHC", "BTC"));
+	}
+
 	private ExchangeRate getKHCRate(ExchangeRate exchangeRate, double input) {
 		Double fiat = input * exchangeRate.rate.fiat.value;
 		final String currencyCode = exchangeRate.getCurrencyCode();
@@ -439,15 +445,18 @@ public class ExchangeRatesProvider extends ContentProvider
 		return new ExchangeRate(rate, currencyCode);
 	}
 
-	public Double getKHCRateFromTicker(ExchangeRate exchangeRate) {
-		EmpoExTicker KHCticker = null;
+	public Double getKHCRateFromTicker() {
+		//Ticker KHCticker = null;
+		EmpoExTicker tickerAll = null;
 		try {
-			KHCticker = tickerFetchKHC();
+			//KHCticker = fetchKHCticker();
+			tickerAll = fetchAll();
 		}
-		catch (final Exception x) {
-			log.warn("problem fetching KHC-BTC ticker: {}", x.getMessage());
+		catch (Exception e) {
+			log.warn("Problem fetching KHC-BTC ticker", e);
 			return -1.0;
 		}
-		return Double.parseDouble(KHCticker.getLast());
+		//return Double.parseDouble(KHCticker.getLast().toString());
+		return Double.parseDouble(tickerAll.getLast());
 	}
 }
