@@ -101,7 +101,7 @@ public class Configuration
 	{
 		final int shift = getBtcShift();
 		if (shift == 0)
-			return new MonetaryFormat().shift(0).minDecimals(2).optionalDecimals(2, 2, 2);
+			return new MonetaryFormat().shift(0).minDecimals(2).optionalDecimals(2, 1);
 		else if (shift == 3)
 			return new MonetaryFormat().shift(3).minDecimals(2).optionalDecimals(2, 1);
 		else

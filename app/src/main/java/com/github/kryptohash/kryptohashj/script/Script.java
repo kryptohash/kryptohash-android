@@ -291,7 +291,7 @@ public class Script {
      */
     @Deprecated
     public Address getFromAddress(NetworkParameters params) throws ScriptException {
-        return new Address(params, Utils.sha256hash160(getPubKey()));
+        return new Address(params, KryptohashUtils.Shake160(getPubKey()).getBytes());
     }
 
     /**
