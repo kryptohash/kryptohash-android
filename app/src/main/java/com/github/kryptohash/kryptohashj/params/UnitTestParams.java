@@ -31,7 +31,7 @@ public class UnitTestParams extends NetworkParameters {
         id = ID_UNITTESTNET;
         packetMagic = 0xf1110907L;
         region = 0;
-        hashCoin = 0;
+        sideChain = 0;
         addressHeader = 107;
         p2shHeader = 196;
         acceptableAddressCodes = new int[] { addressHeader, p2shHeader };

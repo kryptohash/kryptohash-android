@@ -310,8 +310,8 @@ public class WalletProtobufSerializer {
             txBuilder.setTxTime(tx.getTxTime());
         }
 
-        if (tx.getHashCoin() > 0) {
-            txBuilder.setHashCoin(tx.getHashCoin());
+        if (tx.getSideChain() > 0) {
+            txBuilder.setSideChain(tx.getSideChain());
         }
 
         return txBuilder.build();
@@ -589,8 +589,8 @@ public class WalletProtobufSerializer {
             tx.setLockTime(0x7fffffffffffffffL & txProto.getLockTime());
         }
 
-        if (txProto.hasHashCoin()) {
-            tx.setHashCoin(txProto.getHashCoin());
+        if (txProto.hasSideChain()) {
+            tx.setSideChain(txProto.getSideChain());
         }
 
         if (txProto.hasPurpose()) {

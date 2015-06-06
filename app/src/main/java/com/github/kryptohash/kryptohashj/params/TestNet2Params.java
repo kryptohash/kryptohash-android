@@ -31,7 +31,7 @@ public class TestNet2Params extends NetworkParameters {
         id = ID_TESTNET;
         packetMagic = 0xf1fbb5adL;
         region = 0;
-        hashCoin = 0;
+        sideChain = 0;
         port = 39432;
         addressHeader = 107;
         p2shHeader = 196;

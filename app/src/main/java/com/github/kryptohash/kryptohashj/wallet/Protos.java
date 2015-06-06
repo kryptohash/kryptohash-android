@@ -8114,7 +8114,7 @@ public final class Protos {
      * See Wallet.java for detailed description of pool semantics
      * </pre>
      */
-    boolean hasHashCoin();
+    boolean hasSideChain();
     /**
      * <code>required int64 version = 15;</code>
      *
@@ -8122,7 +8122,7 @@ public final class Protos {
      * See Wallet.java for detailed description of pool semantics
      * </pre>
      */
-    long getHashCoin();
+    long getSideChain();
 
   }
   /**
@@ -8296,7 +8296,7 @@ public final class Protos {
             }
             case 122: {
               bitField0_ |= 0x00020000;
-              hashCoin_ = input.readInt64();
+              sideChain_ = input.readInt64();
               break;
             }
           }
@@ -9088,28 +9088,28 @@ public final class Protos {
       return txTime_;
     }
 
-    // required int64 hashCoin = 15;
-    public static final int HASHCOIN_FIELD_NUMBER = 15;
-    private long hashCoin_;
+    // required int64 sideChain = 15;
+    public static final int SIDECHAIN_FIELD_NUMBER = 15;
+    private long sideChain_;
     /**
-     * <code>required int64 hashCoin = 15;</code>
+     * <code>required int64 sideChain = 15;</code>
      *
      * <pre>
-     * The #Coin field is reserved for future enhancements.
+     * The sideChain field is reserved for future enhancements.
      * </pre>
      */
-    public boolean hasHashCoin() {
+    public boolean hasSideChain() {
       return ((bitField0_ & 0x00020000) == 0x00020000);
     }
     /**
-     * <code>required int64 hashCoin = 15;</code>
+     * <code>required int64 sideChain = 15;</code>
      *
      * <pre>
-     * The #Coin field is reserved for future enhancements.
+     * The sideChain field is reserved for future enhancements.
      * </pre>
      */
-    public long getHashCoin() {
-      return hashCoin_;
+    public long getSideChain() {
+      return sideChain_;
     }
 
 
@@ -9128,7 +9128,7 @@ public final class Protos {
       exchangeRate_ = com.github.kryptohash.kryptohashj.wallet.Protos.ExchangeRate.getDefaultInstance();
       memo_ = "";
       txTime_ = 0L;
-      hashCoin_ = 0L;
+      sideChain_ = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -9217,7 +9217,7 @@ public final class Protos {
         output.writeInt64(14, txTime_);
       }
       if (((bitField0_ & 0x00020000) == 0x00020000)) {
-        output.writeInt64(15, hashCoin_);
+        output.writeInt64(15, sideChain_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -9283,7 +9283,7 @@ public final class Protos {
         size += com.google.protobuf.CodedOutputStream.computeInt64Size(14, txTime_);
       }
       if (((bitField0_ & 0x00020000) == 0x00020000)) {
-        size += com.google.protobuf.CodedOutputStream.computeInt64Size(15, hashCoin_);
+        size += com.google.protobuf.CodedOutputStream.computeInt64Size(15, sideChain_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -9449,7 +9449,7 @@ public final class Protos {
         bitField0_ = (bitField0_ & ~0x00001000);
         txTime_ = 0L;
         bitField0_ = (bitField0_ & ~0x00010000);
-        hashCoin_ = 0L;
+        sideChain_ = 0L;
         bitField0_ = (bitField0_ & ~0x00020000);
 
         return this;
@@ -9556,7 +9556,7 @@ public final class Protos {
         if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
           to_bitField0_ |= 0x00010000;
         }
-        result.hashCoin_ = hashCoin_;
+        result.sideChain_ = sideChain_;
         if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
           to_bitField0_ |= 0x00020000;
         }
@@ -9681,8 +9681,8 @@ public final class Protos {
         if (other.hasTxTime()) {
           setTxTime(other.getTxTime());
         }
-        if (other.hasHashCoin()) {
-          setHashCoin(other.getHashCoin());
+        if (other.hasSideChain()) {
+          setSideChain(other.getSideChain());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -11137,50 +11137,50 @@ public final class Protos {
       }
 
       // required int64 version = 15;
-      private long hashCoin_ ;
+      private long sideChain_ ;
       /**
-       * <code>required int64 txtime = 15;</code>
+       * <code>required int64 sideChain = 15;</code>
        *
        * <pre>
-       * The hashCoin field is reserved for future enhancements.
+       * The sideChain field is reserved for future enhancements.
        * </pre>
        */
-      public boolean hasHashCoin() {
+      public boolean hasSideChain() {
         return ((bitField0_ & 0x00020000) == 0x00020000);
       }
       /**
-       * <code>required int64 txtime = 15;</code>
+       * <code>required int64 sideChain = 15;</code>
        *
        * <pre>
-       * The hashCoin field is reserved for future enhancements.
+       * The sideChain field is reserved for future enhancements.
        * </pre>
        */
-      public long getHashCoin() {
-        return hashCoin_;
+      public long getSideChain() {
+        return sideChain_;
       }
       /**
-       * <code>required int64 txtime = 15;</code>
+       * <code>required int64 sideChain = 15;</code>
        *
        * <pre>
-       * The hashCoin field is reserved for future enhancements.
+       * The sideChain field is reserved for future enhancements.
        * </pre>
        */
-      public Builder setHashCoin(long value) {
+      public Builder setSideChain(long value) {
         bitField0_ |= 0x00020000;
-        hashCoin_ = value;
+        sideChain_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int64 txtime = 15;</code>
+       * <code>required int64 sideChain = 15;</code>
        *
        * <pre>
-       * The hashCoin field is reserved for future enhancements.
+       * The sideChain field is reserved for future enhancements.
        * </pre>
        */
-      public Builder clearHashCoin() {
+      public Builder clearSideChain() {
         bitField0_ = (bitField0_ & ~0x00020000);
-        hashCoin_ = 0L;
+        sideChain_ = 0L;
         onChanged();
         return this;
       }

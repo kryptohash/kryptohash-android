@@ -65,7 +65,7 @@ public class Block extends Message {
      * upgrade everyone to change this, so Bitcoin can continue to grow. For now it exists as an anti-DoS measure to
      * avoid somebody creating a titanically huge but valid block and forcing everyone to download/store it forever.
      */
-    public static final int MAX_BLOCK_SIZE = 1 * 1000 * 1000;
+    public static final int MAX_BLOCK_SIZE = 10 * 1024 * 1024;
     /**
      * A "sigop" is a signature verification operation. Because they're expensive we also impose a separate limit on
      * the number in a block to prevent somebody mining a huge block that has way more sigops than normal, so is very
@@ -114,7 +114,7 @@ public class Block extends Message {
         prevBlockHash = Shake320Hash.ZERO_HASH;
         merkleRoot = Shake320Hash.ZERO_HASH;
         txTime = System.currentTimeMillis();
-        hashCoin = 0;
+        sideChain = 0;
         sigChecksum = 0;
         difficultyTarget = 0x2600FFFFL;
         time = 0;
@@ -157,14 +157,14 @@ public class Block extends Message {
      * @param transactions List of transactions including the coinbase.
      */
     public Block(NetworkParameters params, int version, int region, Shake320Hash prevBlockHash, Shake320Hash merkleRoot, long txTime,
-                 long hashCoin, int sigChecksum, int difficultyTarget, int time, int nonce, List<Transaction> transactions) {
+                 long sideChain, int sigChecksum, int difficultyTarget, int time, int nonce, List<Transaction> transactions) {
         super(params);
         this.version = version;
 		this.region = region;
         this.prevBlockHash = prevBlockHash;
         this.merkleRoot = merkleRoot;
 		this.txTime = txTime;
-		this.hashCoin = hashCoin;
+		this.sideChain = sideChain;
 		this.sigChecksum = sigChecksum;
         this.difficultyTarget = difficultyTarget;
         this.time = time;
@@ -206,7 +206,7 @@ public class Block extends Message {
         prevBlockHash = readHash();
         merkleRoot = readHash();
 		txTime = readInt64();
-		hashCoin = readInt64();
+		sideChain = readInt64();
 		sigChecksum = readUint32();
         difficultyTarget = readUint32();
         time = readUint32();
@@ -411,7 +411,7 @@ public class Block extends Message {
         stream.write(Utils.reverseBytes(prevBlockHash.getBytes()));
         stream.write(Utils.reverseBytes(getMerkleRoot().getBytes()));
         Utils.int64ToByteStreamLE(txTime, stream);
-        Utils.int64ToByteStreamLE(hashCoin, stream);
+        Utils.int64ToByteStreamLE(sideChain, stream);
         Utils.uint32ToByteStreamLE(sigChecksum, stream);
         Utils.uint32ToByteStreamLE(difficultyTarget, stream);
         Utils.uint32ToByteStreamLE(time, stream);
@@ -607,7 +607,7 @@ public class Block extends Message {
         block.time = time;
 		block.txTime = txTime;
         block.difficultyTarget = difficultyTarget;
-		block.hashCoin = hashCoin;
+		block.sideChain = sideChain;
 		block.sigChecksum = sigChecksum;
         block.transactions = null;
         block.hash = getHash().duplicate();
@@ -639,8 +639,8 @@ public class Block extends Message {
         s.append("] ");
         s.append(Utils.dateTimeFormat(txTime));
         s.append("\n");
-        s.append("   hashCoin: ");
-        s.append(hashCoin);
+        s.append("   sideChain: ");
+        s.append(sideChain);
         s.append("\n");
         s.append("   sigChecksum: ");
         s.append(sigChecksum);

@@ -38,7 +38,7 @@ public class MainNetParams extends NetworkParameters {
         port = 39168;
         packetMagic = 0xf1ebb49dL;
         region = 0;
-        hashCoin = 0;
+        sideChain = 0;
         genesisBlock.setDifficultyTarget(0x2600FFFFL);
         genesisBlock.setTxTime(0x149aba00000L);
         genesisBlock.setnTime(300000);

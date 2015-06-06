@@ -33,7 +33,7 @@ public class TestNet3Params extends NetworkParameters {
         // Genesis hash is 000000071bfa8530efddbf308a70ba52f06402ab2223c95a6fdd21fe64b25128db9eb171d04f4db0
         packetMagic = 0xf1110907L;
         region = 0;
-        hashCoin = 0;
+        sideChain = 0;
         interval = 10;
         targetTimespan = TARGET_TIMESPAN;
         maxTarget = Utils.decodeCompactBits(0x2600FFFFL);

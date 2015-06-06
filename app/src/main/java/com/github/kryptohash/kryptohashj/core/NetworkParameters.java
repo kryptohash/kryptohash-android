@@ -70,7 +70,7 @@ public abstract class NetworkParameters implements Serializable {
     protected int port;
     protected long packetMagic;  // Indicates message origin network and is used to seek to the next message when stream state is unknown.
     protected int region;
-    protected long hashCoin;
+    protected long sideChain;
     protected int addressHeader;
     protected int p2shHeader;
     protected int dumpedPrivateKeyHeader;
@@ -287,9 +287,9 @@ public abstract class NetworkParameters implements Serializable {
         return region;
     }
 
-    /** The hashCoin for this Wallet */
-    public long getHashCoin() {
-        return hashCoin;
+    /** The sideChain for this Wallet */
+    public long getSideChain() {
+        return sideChain;
     }
 
     /**

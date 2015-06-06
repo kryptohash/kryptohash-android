@@ -113,7 +113,7 @@ public class Transaction extends ChildMessage implements Serializable {
     private ArrayList<TransactionOutput> outputs;
     private long txTime;
     private long lockTime;
-    private long hashCoin;
+    private long sideChain;
 
     // This is either the time the transaction was broadcast as measured from the local clock, or the time from the
     // block in which it was included. Note that this can be changed by re-orgs so the wallet may update this field.
@@ -185,7 +185,7 @@ public class Transaction extends ChildMessage implements Serializable {
         outputs = new ArrayList<TransactionOutput>();
         txTime = 0;
         lockTime = 0;
-        hashCoin = 0;
+        sideChain = 0;
 
         // We don't initialize appearsIn deliberately as it's only useful for transactions stored in the wallet.
         length = 24; // 24 for std fields
@@ -555,7 +555,7 @@ public class Transaction extends ChildMessage implements Serializable {
         }
         // 8 = length of TxTime field (int64)
         // 8 = length of lock_time field (int64)
-        // 8 = length of hashCoin (uint64)
+        // 8 = length of sideChain (uint64)
         return cursor - offset + 24;
     }
 
@@ -594,7 +594,7 @@ public class Transaction extends ChildMessage implements Serializable {
         }
         txTime = readInt64();
         lockTime = readInt64();
-        hashCoin = readInt64();
+        sideChain = readInt64();
         optimalEncodingMessageSize += 24;
         length = cursor - offset;
     }
@@ -633,12 +633,12 @@ public class Transaction extends ChildMessage implements Serializable {
         return this.txTime;
     }
 
-    public void setHashCoin(long value) {
-        this.hashCoin = value;
+    public void setSideChain(long value) {
+        this.sideChain = value;
     }
 
-    public long getHashCoin() {
-        return this.hashCoin;
+    public long getSideChain() {
+        return this.sideChain;
     }
 
     /**
@@ -1101,7 +1101,7 @@ public class Transaction extends ChildMessage implements Serializable {
             out.bitcoinSerialize(stream);
         int64ToByteStreamLE(txTime, stream);
         int64ToByteStreamLE(lockTime, stream);
-        int64ToByteStreamLE(hashCoin, stream);
+        int64ToByteStreamLE(sideChain, stream);
     }
 
 

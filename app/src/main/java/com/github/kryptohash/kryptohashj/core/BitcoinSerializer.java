@@ -114,7 +114,7 @@ public class BitcoinSerializer {
         uint32ToByteArrayBE(params.getPacketMagic(), header, 0);
         uint32ToByteArrayLE(VERSION_NUMBER, header, 4);
         uint32ToByteArrayLE(params.getRegion(), header, 4 + 4);
-        uint64ToByteArrayLE(params.getHashCoin(), header, 4 + 4 + 4);
+        uint64ToByteArrayLE(params.getSideChain(), header, 4 + 4 + 4);
 
         // The header array is initialized to zero by Java so we don't have to worry about
         // NULL terminating the string here.
@@ -169,7 +169,7 @@ public class BitcoinSerializer {
         BitcoinPacketHeader header = new BitcoinPacketHeader(in);
         if (header.region != params.getRegion())
             throw new ProtocolException("Incorrect Region Code");
-        if (header.hashCoin != 0)
+        if (header.sideChain != 0)
             throw new ProtocolException("#Coin not implemented");
         // Now try to read the whole message.
         return deserializePayload(header, in);
@@ -307,7 +307,7 @@ public class BitcoinSerializer {
         public final byte[] header;
         public final int version;
         public final int region;
-        public final long hashCoin;
+        public final long sideChain;
         public final String command;
         public final int size;
         public final byte[] checksum;
@@ -321,7 +321,7 @@ public class BitcoinSerializer {
             cursor += 4;
             region = (int) readUint32(header, cursor);
             cursor += 4;
-            hashCoin = (int) readInt64(header, cursor);
+            sideChain = (int) readInt64(header, cursor);
             cursor += 8;
 
             int cmdOffset = cursor;

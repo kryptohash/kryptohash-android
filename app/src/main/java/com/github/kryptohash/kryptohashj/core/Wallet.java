@@ -3549,8 +3549,8 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
             if (req.shuffleOutputs)
                 req.tx.shuffleOutputs();
 
-            // Add hashCoin and txTime
-            req.tx.setHashCoin(0L); // Not used right now.
+            // Add sideChain and txTime
+            req.tx.setSideChain(0L); // Not used right now.
             req.tx.setTxTime(Utils.currentTimeMillis());
 
             // Now sign the inputs, thus proving that we are entitled to redeem the connected outputs.
