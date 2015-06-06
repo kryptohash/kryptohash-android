@@ -82,7 +82,7 @@ public class Block extends Message {
     private Shake320Hash prevBlockHash;
     private Shake320Hash merkleRoot;
     private long txTime;
-    private long hashCoin;
+    private long sideChain;
     private long sigChecksum;
     private long difficultyTarget; // "nBits"
     private long time;
