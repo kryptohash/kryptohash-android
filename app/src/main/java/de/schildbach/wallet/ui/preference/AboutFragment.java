@@ -75,6 +75,6 @@ public final class AboutFragment extends PreferenceFragment
         findPreference(KEY_ABOUT_CREDITS_BITCOIN_WALLET).setTitle(
                 getString(R.string.about_credits_bitcoin_wallet_title, Constants.BITCOIN_WALLET_APP_CODE_BASE_VERSION));
 		findPreference(KEY_ABOUT_CREDITS_BITCOINJ).setTitle(
-                getString(R.string.about_credits_bitcoinj_title, VersionMessage.BITCOINJ_VERSION));
+                getString(R.string.about_credits_bitcoinj_title, VersionMessage.KRYPTOHASHJ_VERSION));
 	}
 }
