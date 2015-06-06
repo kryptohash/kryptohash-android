@@ -26,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
+import de.schildbach.wallet.Constants;
+import android.os.Build;
+
 public class EmpoExBasePollingService extends BaseExchangeService implements BasePollingService {
 
   protected final String apiKey;
@@ -35,6 +38,7 @@ public class EmpoExBasePollingService extends BaseExchangeService implements Bas
 
   protected final EmpoEx empoEx;
   private static final Logger log = LoggerFactory.getLogger(EmpoExBasePollingService.class);
+  private static boolean ENABLE_TLSv1_2 = Build.VERSION.SDK_INT >= Constants.SDK_LOLLIPOP;
 
   /**
    * Constructor
@@ -45,12 +49,15 @@ public class EmpoExBasePollingService extends BaseExchangeService implements Bas
     super(exchange);
 
     SSLSocketFactory sf = null;
-    try {
-        SSLContext context = SSLContext.getInstance("TLSv1.2");
-        context.init(null, null, null);
-        sf = new SSLSocketFactoryEx(context.getSocketFactory());
-    } catch (final Exception e) {
-        // swallow
+    if (ENABLE_TLSv1_2) {
+        // Only API 21 and later (Lollipop) provide the TLS 1.2 cipher suites.
+	    try {
+	        SSLContext context = SSLContext.getInstance("TLSv1.2");
+	        context.init(null, null, null);
+	        sf = new SSLSocketFactoryEx(context.getSocketFactory());
+	    } catch (final Exception e) {
+	        // swallow
+        }
     }
     if (sf != null) {
         ClientConfig myconfig = new ClientConfig();
