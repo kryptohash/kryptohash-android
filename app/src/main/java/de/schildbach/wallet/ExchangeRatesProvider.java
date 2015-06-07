@@ -122,7 +122,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	private static final String BITCOINAVERAGE_SOURCE = "BitcoinAverage.com";
 	private static final URL BLOCKCHAININFO_URL;
 	private static final String[] BLOCKCHAININFO_FIELDS = new String[] { "15m" };
-	private static final String BLOCKCHAININFO_SOURCE = "blockchain.info";
+	private static final String BLOCKCHAININFO_SOURCE = "blocks";
 
 	static
 	{
@@ -181,9 +181,11 @@ public class ExchangeRatesProvider extends ContentProvider
 			if (newExchangeRates == null) {
 				newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
 			}
+			/*
 			if (newExchangeRates == null) {
 				newExchangeRates = requestExchangeRates(BLOCKCHAININFO_URL, userAgent, BLOCKCHAININFO_SOURCE, BLOCKCHAININFO_FIELDS);
 			}
+			*/
 			if (newExchangeRates != null) {
 				exchangeRates = newExchangeRates;
 				lastUpdated = now;
@@ -201,11 +203,14 @@ public class ExchangeRatesProvider extends ContentProvider
 						khc_btc = getKHCRateFromTicker();
 					}
 					if (khc_btc >= 0.0) {
-						khcRate = getKHCRate(exchangeRateToCache, khc_btc);
+						khcRate = getAdjustedKHCRate(exchangeRateToCache, khc_btc);
 						config.setCachedExchangeRate(khcRate);
 						Map<String, ExchangeRate> updatedExchangeRates = new TreeMap<String, ExchangeRate>();
 						for (Map.Entry<String, ExchangeRate> entry : newExchangeRates.entrySet()) {
-							updatedExchangeRates.put(entry.getKey(), getKHCRate(entry.getValue(), khc_btc));
+							//if (entry.getKey().equals("USD"))
+							{
+								updatedExchangeRates.put(entry.getKey(), getAdjustedKHCRate(entry.getValue(), khc_btc));
+							}
 						}
 						exchangeRates = updatedExchangeRates;
 					}
@@ -442,6 +447,15 @@ public class ExchangeRatesProvider extends ContentProvider
 		Double fiat = input * exchangeRate.rate.fiat.value;
 		final String currencyCode = exchangeRate.getCurrencyCode();
 		final com.github.kryptohash.kryptohashj.utils.ExchangeRate rate = new com.github.kryptohash.kryptohashj.utils.ExchangeRate(Fiat.valueOf(currencyCode, fiat.longValue()));
+		return new ExchangeRate(rate, currencyCode);
+	}
+
+	private ExchangeRate getAdjustedKHCRate(ExchangeRate exchangeRate, double input) {
+		Double fiat = input * exchangeRate.rate.fiat.value;
+		fiat = fiat < 1.0 ? 1000.0 : fiat*1000.0;
+		Coin coin = Coin.THOUSAND_COINS;
+		final String currencyCode = exchangeRate.getCurrencyCode();
+		final com.github.kryptohash.kryptohashj.utils.ExchangeRate rate = new com.github.kryptohash.kryptohashj.utils.ExchangeRate(coin, Fiat.valueOf(currencyCode, fiat.longValue()));
 		return new ExchangeRate(rate, currencyCode);
 	}
 

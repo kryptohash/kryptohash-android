@@ -74,7 +74,7 @@ public final class Constants
 	/** Maximum size of backups. Files larger will be rejected. */
 	public static final long BACKUP_MAX_CHARS = 10000000;
 
-	private static final String EXPLORE_BASE_URL_PROD = "http://seed1.kryptohash.org:3000/";
+	private static final String EXPLORE_BASE_URL_PROD = "http://xplorer.kryptohash.org:3000/";
 	private static final String EXPLORE_BASE_URL_TEST = "http://seed1.kryptohash.org:3000/testnet/";
 	/** Base URL for browsing transactions, blocks or addresses. */
 	public static final String EXPLORE_BASE_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_PROD
@@ -88,7 +88,7 @@ public final class Constants
 
     public static final String BITCOINAVERAGE_API_URL = "https://api.bitcoinaverage.com/custom/abw";
 
-    public static final String BLOCKCHAIN_TICKER_URL = "http://www.kryptohash.org/khcbc.php";
+    public static final String BLOCKCHAIN_TICKER_URL = "https://api.kryptohash.org";
 
 	/** URL to fetch version alerts from. */
 	public static final String VERSION_URL = "http://api.kryptohash.org/version";
@@ -130,7 +130,7 @@ public final class Constants
 	public static final int ADDRESS_FORMAT_GROUP_SIZE = 4;
 	public static final int ADDRESS_FORMAT_LINE_SIZE = 12;
 
-	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(3).optionalDecimals();
+	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(4).optionalDecimals();
 
 	public static final String SOURCE_URL = "https://github.com/kryptohash/kryptohash-android";
 	public static final String BINARY_URL = "https://github.com/kryptohash/kryptohash-android/releases";
