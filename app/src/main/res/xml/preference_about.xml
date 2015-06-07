@@ -18,11 +18,11 @@
 	</Preference>
 	<Preference
 		android:key="about_source"
-		android:summary="github.com/kryptohash/khc-wallet-android"
+		android:summary="github.com/kryptohash/kryptohash-android"
 		android:title="@string/about_source_title" >
 		<intent
 			android:action="android.intent.action.VIEW"
-			android:data="https://github.com/kryptohash/khc-wallet-android" />
+			android:data="https://github.com/kryptohash/kryptohash-android" />
 	</Preference>
 	<Preference
 		android:key="about_market_app"

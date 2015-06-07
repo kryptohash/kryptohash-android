@@ -289,11 +289,11 @@ public final class WalletActivity extends AbstractWalletActivity
 			case R.id.wallet_options_exchange_rates:
 				startActivity(new Intent(this, ExchangeRatesActivity.class));
 				return true;
-
+			/*
 			case R.id.wallet_options_sweep_wallet:
 				SweepWalletActivity.start(this);
 				return true;
-
+			*/
 			case R.id.wallet_options_network_monitor:
 				startActivity(new Intent(this, NetworkMonitorActivity.class));
 				return true;

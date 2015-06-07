@@ -40,7 +40,7 @@ public final class Constants
 	public static final NetworkParameters NETWORK_PARAMETERS = TEST ? TestNet3Params.get() : MainNetParams.get();
 
     /** Code-base version of main Bitcoin Wallet app for Android by Andreas Schildbach */
-    public static final double BITCOIN_WALLET_APP_CODE_BASE_VERSION = 1.01;
+    public static final double BITCOIN_WALLET_APP_CODE_BASE_VERSION = 1.02;
 
 	public final static class Files
 	{
@@ -74,8 +74,8 @@ public final class Constants
 	/** Maximum size of backups. Files larger will be rejected. */
 	public static final long BACKUP_MAX_CHARS = 10000000;
 
-	private static final String EXPLORE_BASE_URL_PROD = "https://www.biteasy.com/";
-	private static final String EXPLORE_BASE_URL_TEST = "https://www.biteasy.com/testnet/";
+	private static final String EXPLORE_BASE_URL_PROD = "http://seed1.kryptohash.org:3000/";
+	private static final String EXPLORE_BASE_URL_TEST = "http://seed1.kryptohash.org:3000/testnet/";
 	/** Base URL for browsing transactions, blocks or addresses. */
 	public static final String EXPLORE_BASE_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_PROD
 			: EXPLORE_BASE_URL_TEST;

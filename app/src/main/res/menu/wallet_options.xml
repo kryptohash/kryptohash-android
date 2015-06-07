@@ -53,10 +53,12 @@
 		android:id="@+id/wallet_options_exchange_rates"
 		app:showAsAction="never"
 		android:title="@string/exchange_rates_activity_title"/>
+	<!--
 	<item
 		android:id="@+id/wallet_options_sweep_wallet"
 		app:showAsAction="never"
 		android:title="@string/sweep_wallet_activity_title"/>
+	-->
 	<item
 		android:id="@+id/wallet_options_network_monitor"
 		app:showAsAction="never"
