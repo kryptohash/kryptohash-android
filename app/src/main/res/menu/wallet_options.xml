@@ -72,6 +72,10 @@
 		app:showAsAction="never"
 		android:title="@string/wallet_options_donate"/>
 	<item
+		android:id="@+id/wallet_options_disconnect"
+		app:showAsAction="never"
+		android:title="@string/wallet_options_disconnect"/>
+	<item
 		android:id="@+id/wallet_options_help"
 		app:showAsAction="never"
 		android:title="@string/button_help"/>

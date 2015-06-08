@@ -146,11 +146,9 @@ public final class WalletActivity extends AbstractWalletActivity
 	{
 		super.onResume();
 
-		handler.postDelayed(new Runnable()
-		{
+		handler.postDelayed(new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				// delayed start so that UI has enough time to initialize
 				getWalletApplication().startBlockchainService(true);
 			}
@@ -261,6 +259,7 @@ public final class WalletActivity extends AbstractWalletActivity
 		menu.findItem(R.id.wallet_options_backup_wallet).setEnabled(Environment.MEDIA_MOUNTED.equals(externalStorageState));
 		menu.findItem(R.id.wallet_options_encrypt_keys).setTitle(
 				wallet.isEncrypted() ? R.string.wallet_options_encrypt_keys_change : R.string.wallet_options_encrypt_keys_set);
+		menu.findItem(R.id.wallet_options_disconnect).setVisible(config.getConnectivityNotificationEnabled());
 
 		return true;
 	}
@@ -318,6 +317,10 @@ public final class WalletActivity extends AbstractWalletActivity
 				HelpDialogFragment.page(getFragmentManager(), R.string.help_safety);
 				return true;
 
+			case R.id.wallet_options_disconnect:
+				handleDisconnect();
+				return true;
+
 			case R.id.wallet_options_donate:
 				handleDonate();
 				return true;
@@ -328,6 +331,12 @@ public final class WalletActivity extends AbstractWalletActivity
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void handleDisconnect()
+	{
+		getWalletApplication().stopBlockchainService();
+		finish();
 	}
 
 	public void handleRequestCoins()
