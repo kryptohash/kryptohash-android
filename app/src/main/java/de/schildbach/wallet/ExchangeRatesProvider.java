@@ -440,7 +440,8 @@ public class ExchangeRatesProvider extends ContentProvider
 	private Ticker fetchKHCticker() throws Exception {
 		Exchange exchange = ExchangeFactory.INSTANCE.createExchange(EmpoExExchange.class.getName());
 		PollingMarketDataService marketDataService = exchange.getPollingMarketDataService();
-		return marketDataService.getTicker(new CurrencyPair("KHC", "BTC"));
+		//return marketDataService.getTicker(new CurrencyPair("KHC", "BTC"));
+		return marketDataService.getTickerKHC();
 	}
 
 	private ExchangeRate getKHCRate(ExchangeRate exchangeRate, double input) {
@@ -460,17 +461,17 @@ public class ExchangeRatesProvider extends ContentProvider
 	}
 
 	public Double getKHCRateFromTicker() {
-		//Ticker KHCticker = null;
-		EmpoExTicker tickerAll = null;
+		Ticker KHCticker = null;
+		//EmpoExTicker tickerAll = null;
 		try {
-			//KHCticker = fetchKHCticker();
-			tickerAll = fetchAll();
+			KHCticker = fetchKHCticker();
+			//tickerAll = fetchAll();
 		}
 		catch (Exception e) {
 			log.warn("Problem fetching KHC-BTC ticker", e);
 			return -1.0;
 		}
-		//return Double.parseDouble(KHCticker.getLast().toString());
-		return Double.parseDouble(tickerAll.getLast());
+		return Double.parseDouble(KHCticker.getLast().toString());
+		//return Double.parseDouble(tickerAll.getLast());
 	}
 }

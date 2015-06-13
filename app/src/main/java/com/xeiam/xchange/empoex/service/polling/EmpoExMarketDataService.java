@@ -44,6 +44,13 @@ public class EmpoExMarketDataService extends EmpoExMarketDataServiceRaw implemen
   }
 
   @Override
+  public Ticker getTickerKHC() throws IOException {
+
+    EmpoExTicker empoExTicker = super.getEmpoExTickerKHC();
+    return EmpoExAdapters.adaptEmpoExTicker(empoExTicker);
+  }
+
+  @Override
   public OrderBook getOrderBook(CurrencyPair currencyPair, Object... args) throws IOException {
 
     String pairString = EmpoExUtils.toPairString(currencyPair);

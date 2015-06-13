@@ -24,7 +24,11 @@ public interface EmpoEx {
 
   @GET
   @Path("marketinfo/{pairString}/")
-  List<EmpoExTicker> getEmpoExTicker(@PathParam("pairString") String pairstring) throws IOException;
+  List<EmpoExTicker> getEmpoExTicker(@PathParam("pairString") String pairString) throws IOException;
+
+  @GET
+  @Path("marketinfo/KHC-BTC")
+  List<EmpoExTicker> getEmpoExTickerKHC() throws IOException;
 
   @GET
   @Path("markethistory/{pairString}/")

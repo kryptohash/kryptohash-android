@@ -43,6 +43,22 @@ public interface PollingMarketDataService extends BasePollingService {
 
   /**
    * <p>
+   * Get the KHC-BTC ticker representing the current exchange rate.  This ugly hack is required because @PathParam doesn't seem
+   * to work on Android.
+   * </p>
+   *
+   * @return The KHC-BTC Ticker, null if some sort of error occurred. Implementers should log the error.
+   * @throws ExchangeException - Indication that the exchange reported some kind of error with the request or response
+   * @throws NotAvailableFromExchangeException - Indication that the exchange does not support the requested function or data
+   * @throws NotYetImplementedForExchangeException - Indication that the exchange supports the requested function or data, but it has not yet been
+   *         implemented
+   * @throws IOException - Indication that a networking error occurred while fetching JSON data
+   */
+  Ticker getTickerKHC() throws ExchangeException, NotAvailableFromExchangeException,
+      NotYetImplementedForExchangeException, IOException;
+
+  /**
+   * <p>
    * Get an order book representing the current offered exchange rates (market depth)
    * </p>
    * 

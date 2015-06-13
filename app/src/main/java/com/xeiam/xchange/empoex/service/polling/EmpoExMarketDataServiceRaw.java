@@ -33,6 +33,11 @@ public class EmpoExMarketDataServiceRaw extends EmpoExBasePollingService {
     return empoEx.getEmpoExTicker(pairString).get(0);
   }
 
+  public EmpoExTicker getEmpoExTickerKHC() throws IOException {
+
+    return empoEx.getEmpoExTickerKHC().get(0);
+  }
+
   public Map<String, List<EmpoExTrade>> getEmpoExTrades(CurrencyPair currencyPair) throws IOException {
 
     String pairString = EmpoExUtils.toPairString(currencyPair);
