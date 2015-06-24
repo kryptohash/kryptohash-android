@@ -519,7 +519,7 @@ public class Peer extends PeerSocketHandler {
                         log.info("Lost download peer status, throwing away downloaded headers.");
                         return;
                     }
-                    if (blockChain.add(header)) {
+                    if (blockChain.addBlock(header)) {
                         // The block was successfully linked into the chain. Notify the user of our progress.
                         invokeOnBlocksDownloaded(header);
                     } else {
@@ -836,7 +836,8 @@ public class Peer extends PeerSocketHandler {
             log.debug("{}: Received broadcast block {}", getAddress(), m.getHashAsString());
         }
         // Was this block requested by getBlock()?
-        if (maybeHandleRequestedData(m)) return;
+        if (maybeHandleRequestedData(m))
+            return;
         if (blockChain == null) {
             log.warn("Received block but was not configured with an AbstractBlockChain");
             return;
@@ -849,7 +850,7 @@ public class Peer extends PeerSocketHandler {
         pendingBlockDownloads.remove(m.getHash());
         try {
             // Otherwise it's a block sent to us because the peer thought we needed it, so add it to the block chain.
-            if (blockChain.add(m)) {
+            if (blockChain.addBlock(m)) {
                 // The block was successfully linked into the chain. Notify the user of our progress.
                 invokeOnBlocksDownloaded(m);
             } else {
@@ -953,7 +954,7 @@ public class Peer extends PeerSocketHandler {
                 lock.unlock();
             }
 
-            if (blockChain.add(m)) {
+            if (blockChain.addBlock(m)) {
                 // The block was successfully linked into the chain. Notify the user of our progress.
                 invokeOnBlocksDownloaded(m.getBlockHeader());
             } else {

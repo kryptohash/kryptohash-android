@@ -980,13 +980,12 @@ public final class SendCoinsFragment extends Fragment
 				sentTransaction = transaction;
 
 				state = State.SENDING;
-				updateView();
+				//updateView();
 
 				sentTransaction.getConfidence().addEventListener(sentTransactionConfidenceListener);
 
                 final Address refundAddress = paymentIntent.standard == Standard.BIP70 ? wallet.freshAddress(KeyPurpose.REFUND) : null;
-				final Payment payment = PaymentProtocol.createPaymentMessage(Arrays.asList(new Transaction[] { sentTransaction }), finalAmount,
-						refundAddress, null, paymentIntent.payeeData);
+				final Payment payment = PaymentProtocol.createPaymentMessage(Arrays.asList(new Transaction[] { sentTransaction }), finalAmount,	refundAddress, null, paymentIntent.payeeData);
 
                 if (directPaymentEnableView.isChecked())
 					directPay(payment);

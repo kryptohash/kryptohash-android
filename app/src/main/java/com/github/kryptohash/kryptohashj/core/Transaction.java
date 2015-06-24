@@ -267,8 +267,10 @@ public class Transaction extends ChildMessage implements Serializable {
         // This is tested in WalletTest.
         Coin v = Coin.ZERO;
         for (TransactionOutput o : outputs) {
-            if (!o.isMineOrWatched(transactionBag)) continue;
-            if (!includeSpent && !o.isAvailableForSpending()) continue;
+            if (!o.isMineOrWatched(transactionBag))
+                continue;
+            if (!includeSpent && !o.isAvailableForSpending())
+                continue;
             v = v.add(o.getValue());
         }
         return v;

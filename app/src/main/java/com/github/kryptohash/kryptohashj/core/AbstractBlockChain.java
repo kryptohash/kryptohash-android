@@ -271,9 +271,9 @@ public abstract class AbstractBlockChain {
      * If the block can be connected to the chain, returns true.
      * Accessing block's transactions in another thread while this method runs may result in undefined behavior.
      */
-    public boolean add(Block block) throws VerificationException, PrunedException {
+    public boolean addBlock(Block block) throws VerificationException, PrunedException {
         try {
-            return add(block, true, null, null);
+            return addBlock(block, true, null, null);
         } catch (BlockStoreException e) {
             // TODO: Figure out a better way to propagate this exception to the user.
             throw new RuntimeException(e);
@@ -293,7 +293,7 @@ public abstract class AbstractBlockChain {
      * exception is thrown. If the block is OK but cannot be connected to the chain at this time, returns false.
      * If the block can be connected to the chain, returns true.
      */
-    public boolean add(FilteredBlock block) throws VerificationException, PrunedException {
+    public boolean addBlock(FilteredBlock block) throws VerificationException, PrunedException {
         try {
             // The block has a list of hashes of transactions that matched the Bloom filter, and a list of associated
             // Transaction objects. There may be fewer Transaction objects than hashes, this is expected. It can happen
@@ -302,7 +302,7 @@ public abstract class AbstractBlockChain {
             // a false positive, as expected in any Bloom filtering scheme). The filteredTxn list here will usually
             // only be full of data when we are catching up to the head of the chain and thus haven't witnessed any
             // of the transactions.
-            return add(block.getBlockHeader(), true, block.getTransactionHashes(), block.getAssociatedTransactions());
+            return addBlock(block.getBlockHeader(), true, block.getTransactionHashes(), block.getAssociatedTransactions());
         } catch (BlockStoreException e) {
             // TODO: Figure out a better way to propagate this exception to the user.
             throw new RuntimeException(e);
@@ -349,7 +349,7 @@ public abstract class AbstractBlockChain {
     private long statsBlocksAdded;
 
     // filteredTxHashList contains all transactions, filteredTxn just a subset
-    private boolean add(Block block, boolean tryConnecting, @Nullable List<Shake320Hash> filteredTxHashList, @Nullable Map<Shake320Hash, Transaction> filteredTxn) throws BlockStoreException, VerificationException, PrunedException {
+    private boolean addBlock(Block block, boolean tryConnecting, @Nullable List<Shake320Hash> filteredTxHashList, @Nullable Map<Shake320Hash, Transaction> filteredTxn) throws BlockStoreException, VerificationException, PrunedException {
         lock.lock();
         try {
             // TODO: Use read/write locks to ensure that during chain download properties are still low latency.
@@ -465,9 +465,9 @@ public abstract class AbstractBlockChain {
         StoredBlock head = getChainHead();
         if (storedPrev.equals(head)) {
             if (filtered && filteredTxn.size() > 0)  {
-                log.debug("Block {} connects to top of best chain with {} transaction(s) of which we were sent {}",
-                        block.getHashAsString(), filteredTxHashList.size(), filteredTxn.size());
-                for (Shake320Hash hash : filteredTxHashList) log.debug("  matched tx {}", hash);
+                log.debug("Block {} connects to top of best chain with {} transaction(s) of which we were sent {}", block.getHashAsString(), filteredTxHashList.size(), filteredTxn.size());
+                for (Shake320Hash hash : filteredTxHashList)
+                    log.debug("  matched tx {}", hash);
             }
             if (expensiveChecks && block.getTimeSeconds() <= getMedianTimestampOfRecentBlocks(head, blockStore))
                 throw new VerificationException("Block's timestamp is too early");
@@ -476,8 +476,7 @@ public abstract class AbstractBlockChain {
             TransactionOutputChanges txOutChanges = null;
             if (shouldVerifyTransactions())
                 txOutChanges = connectTransactions(storedPrev.getHeight() + 1, block);
-            StoredBlock newStoredBlock = addToBlockStore(storedPrev,
-                    block.transactions == null ? block : block.cloneAsHeader(), txOutChanges);
+            StoredBlock newStoredBlock = addToBlockStore(storedPrev, block.transactions == null ? block : block.cloneAsHeader(), txOutChanges);
             setChainHead(newStoredBlock);
             log.debug("Chain is now {} blocks high, running listeners", newStoredBlock.getHeight());
             informListenersForNewBlock(block, NewBlockType.BEST_CHAIN, filteredTxHashList, filteredTxn, newStoredBlock);
@@ -536,11 +535,11 @@ public abstract class AbstractBlockChain {
         // coinbases aren't used before maturity.
         boolean first = true;
         Set<Shake320Hash> falsePositives = Sets.newHashSet();
-        if (filteredTxHashList != null) falsePositives.addAll(filteredTxHashList);
+        if (filteredTxHashList != null)
+            falsePositives.addAll(filteredTxHashList);
         for (final ListenerRegistration<BlockChainListener> registration : listeners) {
             if (registration.executor == Threading.SAME_THREAD) {
-                informListenerForNewTransactions(block, newBlockType, filteredTxHashList, filteredTxn,
-                        newStoredBlock, first, registration.listener, falsePositives);
+                informListenerForNewTransactions(block, newBlockType, filteredTxHashList, filteredTxn, newStoredBlock, first, registration.listener, falsePositives);
                 if (newBlockType == NewBlockType.BEST_CHAIN)
                     registration.listener.notifyNewBestBlock(newStoredBlock);
             } else {
@@ -552,8 +551,7 @@ public abstract class AbstractBlockChain {
                         try {
                             // We can't do false-positive handling when executing on another thread
                             Set<Shake320Hash> ignoredFalsePositives = Sets.newHashSet();
-                            informListenerForNewTransactions(block, newBlockType, filteredTxHashList, filteredTxn,
-                                    newStoredBlock, notFirst, registration.listener, ignoredFalsePositives);
+                            informListenerForNewTransactions(block, newBlockType, filteredTxHashList, filteredTxn, newStoredBlock, notFirst, registration.listener, ignoredFalsePositives);
                             if (newBlockType == NewBlockType.BEST_CHAIN)
                                 registration.listener.notifyNewBestBlock(newStoredBlock);
                         } catch (VerificationException e) {
@@ -583,8 +581,7 @@ public abstract class AbstractBlockChain {
             // is relevant to both of them, they don't end up accidentally sharing the same object (which can
             // result in temporary in-memory corruption during re-orgs). See bug 257. We only duplicate in
             // the case of multiple wallets to avoid an unnecessary efficiency hit in the common case.
-            sendTransactionsToListener(newStoredBlock, newBlockType, listener, 0, block.transactions,
-                    !first, falsePositives);
+            sendTransactionsToListener(newStoredBlock, newBlockType, listener, 0, block.transactions, !first, falsePositives);
         } else if (filteredTxHashList != null) {
             checkNotNull(filteredTxn);
             // We must send transactions to listeners in the order they appeared in the block - thus we iterate over the
@@ -594,8 +591,7 @@ public abstract class AbstractBlockChain {
             for (Shake320Hash hash : filteredTxHashList) {
                 Transaction tx = filteredTxn.get(hash);
                 if (tx != null) {
-                    sendTransactionsToListener(newStoredBlock, newBlockType, listener, relativityOffset,
-                            Arrays.asList(tx), !first, falsePositives);
+                    sendTransactionsToListener(newStoredBlock, newBlockType, listener, relativityOffset, Arrays.asList(tx), !first, falsePositives);
                 } else {
                     if (listener.notifyTransactionIsInBlock(hash, newStoredBlock, newBlockType, relativityOffset)) {
                         falsePositives.remove(hash);
@@ -820,7 +816,7 @@ public abstract class AbstractBlockChain {
                 // Otherwise we can connect it now.
                 // False here ensures we don't recurse infinitely downwards when connecting huge chains.
                 log.info("Connected orphan {}", orphanBlock.block.getHash());
-                add(orphanBlock.block, false, orphanBlock.filteredTxHashes, orphanBlock.filteredTxn);
+                addBlock(orphanBlock.block, false, orphanBlock.filteredTxHashes, orphanBlock.filteredTxn);
                 iter.remove();
                 blocksConnectedThisRound++;
             }

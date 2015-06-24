@@ -1606,9 +1606,9 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
     public boolean isTransactionRelevant(Transaction tx) throws ScriptException {
         lock.lock();
         try {
-            return tx.getValueSentFromMe(this).signum() > 0 ||
-                   tx.getValueSentToMe(this).signum() > 0 ||
-                   checkForDoubleSpendAgainstPending(tx, false);
+            Coin valueSentFromMe = tx.getValueSentFromMe(this);
+            Coin valueSentToMe = tx.getValueSentToMe(this);
+            return valueSentFromMe.signum() > 0 || valueSentToMe.signum() > 0 || checkForDoubleSpendAgainstPending(tx, false);
         } finally {
             lock.unlock();
         }
@@ -1634,7 +1634,8 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
                 TransactionOutPoint outpoint = input.getOutpoint();
                 if (outpoints.contains(outpoint)) {
                     // It does, it's a double spend against the pending pool, which makes it relevant.
-                    if (!doubleSpentTxns.isEmpty() && doubleSpentTxns.getLast() == p) continue;
+                    if (!doubleSpentTxns.isEmpty() && doubleSpentTxns.getLast() == p)
+                        continue;
                     doubleSpentTxns.add(p);
                 }
             }
@@ -1664,9 +1665,7 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
      * block might change which chain is best causing a reorganize. A re-org can totally change our balance!
      */
     @Override
-    public void receiveFromBlock(Transaction tx, StoredBlock block,
-                                 BlockChain.NewBlockType blockType,
-                                 int relativityOffset) throws VerificationException {
+    public void receiveFromBlock(Transaction tx, StoredBlock block, BlockChain.NewBlockType blockType, int relativityOffset) throws VerificationException {
         lock.lock();
         try {
             receive(tx, block, blockType, relativityOffset);
@@ -1675,8 +1674,7 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
         }
     }
 
-    private void receive(Transaction tx, StoredBlock block, BlockChain.NewBlockType blockType,
-                         int relativityOffset) throws VerificationException {
+    private void receive(Transaction tx, StoredBlock block, BlockChain.NewBlockType blockType, int relativityOffset) throws VerificationException {
         // Runs in a peer thread.
         checkState(lock.isHeldByCurrentThread());
         Coin prevBalance = getBalance();
@@ -1716,7 +1714,8 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
                 // re-connected by processTxFromBestChain below.
                 for (TransactionOutput output : tx.getOutputs()) {
                     final TransactionInput spentBy = output.getSpentBy();
-                    if (spentBy != null) spentBy.disconnect();
+                    if (spentBy != null)
+                        spentBy.disconnect();
                 }
             }
             processTxFromBestChain(tx, wasPending);
@@ -2185,7 +2184,8 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
         // transactions due to a new block arriving. It will be called later instead.
         checkState(lock.isHeldByCurrentThread());
         checkState(onWalletChangedSuppressions >= 0);
-        if (onWalletChangedSuppressions > 0) return;
+        if (onWalletChangedSuppressions > 0)
+            return;
         for (final ListenerRegistration<WalletEventListener> registration : eventListeners) {
             registration.executor.execute(new Runnable() {
                 @Override
@@ -2312,19 +2312,37 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
      */
     private void addWalletTransaction(Pool pool, Transaction tx) {
         checkState(lock.isHeldByCurrentThread());
-        transactions.put(tx.getHash(), tx);
+
+        Shake320Hash txHash = tx.getHash();
+        if (transactions.containsKey(txHash))
+            log.info("addWalletTransaction: duplicate transaction");
+        else
+            transactions.put(txHash, tx);
+
         switch (pool) {
         case UNSPENT:
-            checkState(unspent.put(tx.getHash(), tx) == null);
+            if (unspent.containsKey(txHash))
+                log.info("addWalletTransaction: duplicate unspent");
+            else
+                unspent.put(txHash, tx);
             break;
         case SPENT:
-            checkState(spent.put(tx.getHash(), tx) == null);
+            if (spent.containsKey(txHash))
+                log.info("addWalletTransaction: duplicate spent");
+            else
+                spent.put(txHash, tx);
             break;
         case PENDING:
-            checkState(pending.put(tx.getHash(), tx) == null);
+            if (pending.containsKey(txHash))
+                log.info("addWalletTransaction: duplicate pending");
+            else
+                pending.put(txHash, tx);
             break;
         case DEAD:
-            checkState(dead.put(tx.getHash(), tx) == null);
+            if (dead.containsKey(txHash))
+                log.info("addWalletTransaction: duplicate dead");
+            else
+                dead.put(txHash, tx);
             break;
         default:
             throw new RuntimeException("Unknown wallet transaction type " + pool);
@@ -3667,10 +3685,13 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
             LinkedList<TransactionOutput> candidates = Lists.newLinkedList();
             for (Transaction tx : Iterables.concat(unspent.values(), pending.values())) {
                 // Do not try and spend coinbases that were mined too recently, the protocol forbids it.
-                if (excludeImmatureCoinbases && !tx.isMature()) continue;
+                if (excludeImmatureCoinbases && !tx.isMature())
+                    continue;
                 for (TransactionOutput output : tx.getOutputs()) {
-                    if (!output.isAvailableForSpending()) continue;
-                    if (!output.isMine(this)) continue;
+                    if (!output.isAvailableForSpending())
+                        continue;
+                    if (!output.isMine(this))
+                        continue;
                     candidates.add(output);
                 }
             }

@@ -62,7 +62,7 @@
 -dontwarn android.support.v4.**
 
 # bitcoinj
--keep class org.bitcoinj.wallet.Protos$** { *; }
+-keep class com.github.kryptohash.kryptohashj.wallet.Protos$** { *; }
 -keep class org.bitcoin.protocols.payments.Protos$** { *; }
 
 # Guava

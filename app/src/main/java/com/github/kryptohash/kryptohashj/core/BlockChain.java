@@ -147,8 +147,8 @@ public class BlockChain extends AbstractBlockChain {
     }
 
     @Override
-    public boolean add(FilteredBlock block) throws VerificationException, PrunedException {
-        boolean success = super.add(block);
+    public boolean addBlock(FilteredBlock block) throws VerificationException, PrunedException {
+        boolean success = super.addBlock(block);
         if (success) {
             trackFilteredTransactions(block.getTransactionCount());
         }

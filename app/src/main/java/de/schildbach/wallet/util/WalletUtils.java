@@ -122,13 +122,35 @@ public class WalletUtils
 	}
 
 	@CheckForNull
-	public static Address getWalletAddressOfReceived(@Nonnull final Transaction tx, @Nonnull final Wallet wallet)
+	public static Address getToAddressOfSent(@Nonnull final Transaction tx, @Nonnull final Wallet wallet)
 	{
 		for (final TransactionOutput output : tx.getOutputs())
 		{
 			try
 			{
 				if (!output.isMine(wallet))
+				{
+					final Script script = output.getScriptPubKey();
+					return script.getToAddress(Constants.NETWORK_PARAMETERS, true);
+				}
+			}
+			catch (final ScriptException x)
+			{
+				// swallow
+			}
+		}
+
+		return null;
+	}
+
+	@CheckForNull
+	public static Address getWalletAddressOfReceived(@Nonnull final Transaction tx, @Nonnull final Wallet wallet)
+	{
+		for (final TransactionOutput output : tx.getOutputs())
+		{
+			try
+			{
+				if (output.isMine(wallet))
 				{
 					final Script script = output.getScriptPubKey();
 					return script.getToAddress(Constants.NETWORK_PARAMETERS, true);

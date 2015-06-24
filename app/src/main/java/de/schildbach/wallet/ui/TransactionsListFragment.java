@@ -106,7 +106,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 
 	private static final String KEY_DIRECTION = "direction";
 	private static final long THROTTLE_MS = DateUtils.SECOND_IN_MILLIS;
-	private static final Uri KEY_ROTATION_URI = Uri.parse("http://bitcoin.org/en/alert/2013-08-11-android");
+	private static final Uri KEY_ROTATION_URI = Uri.parse("http://kryptohash.org/en/alert/2013-08-11-android");
 
 	private static final Logger log = LoggerFactory.getLogger(TransactionsListFragment.class);
 
@@ -235,7 +235,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 					final Coin value = tx.getValue(wallet);
 					final boolean sent = value.signum() < 0;
 
-					address = sent ? WalletUtils.getWalletAddressOfReceived(tx, wallet) : WalletUtils.getFirstFromAddress(tx);
+					address = sent ? WalletUtils.getToAddressOfSent(tx, wallet) : WalletUtils.getWalletAddressOfReceived(tx, wallet);
 
 					final String label;
 					if (tx.isCoinBase())
@@ -417,8 +417,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
 				final boolean sent = tx.getValue(wallet).signum() < 0;
 				final boolean isInternal = tx.getPurpose() == Purpose.KEY_ROTATION;
 
-				if ((direction == Direction.RECEIVED && !sent && !isInternal) || direction == null
-						|| (direction == Direction.SENT && sent && !isInternal))
+				if (direction == null || (direction == Direction.RECEIVED && !sent && !isInternal) || (direction == Direction.SENT && sent && !isInternal))
 					filteredTransactions.add(tx);
 			}
 

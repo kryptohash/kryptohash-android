@@ -247,7 +247,7 @@
     <string name="about_copyright">&#169; Kryptohash 2014&#8211;2015</string>
 	<string name="about_license_title">License</string>
 	<string name="about_source_title">Source code</string>
-	<string name="about_credits_bitcoinj_title">This app is using BitcoinJ v%s</string>
+	<string name="about_credits_bitcoinj_title">This app is using KryptohashJ v%s</string>
     <string name="about_credits_bitcoin_wallet_title">Based on Kryptohash Wallet v%s</string>
 	<string name="about_credits_zxing_title">This app is using ZXing</string>
 	<string name="about_market_app_title">Google Play Store</string>
