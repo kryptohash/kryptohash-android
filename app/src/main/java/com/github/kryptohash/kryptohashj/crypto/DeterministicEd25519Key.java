@@ -285,7 +285,7 @@ public class DeterministicEd25519Key extends Ed25519Key {
         if (this.keyCrypter != null && !this.keyCrypter.equals(keyCrypter))
             throw new KeyCrypterException("The keyCrypter being used to decrypt the key is different to the one that was used to encrypt it");
         BigInteger Seed = findOrDeriveEncryptedSeed(keyCrypter, aesKey);
-        DeterministicEd25519Key key = new DeterministicEd25519Key(childNumberPath, chainCode, Seed.toByteArray(), parent);
+        DeterministicEd25519Key key = new DeterministicEd25519Key(childNumberPath, chainCode, Utils.bigIntegerToBytes(Seed, 32), parent);
         if (!Arrays.equals(key.getPubKey(), getPubKey()))
             throw new KeyCrypterException("Provided AES key is wrong");
         if (parent == null)
