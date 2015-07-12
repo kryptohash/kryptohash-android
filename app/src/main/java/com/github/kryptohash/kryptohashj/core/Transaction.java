@@ -869,6 +869,10 @@ public class Transaction extends ChildMessage implements Serializable {
         this.length = this.bitcoinSerialize().length;
     }
 
+    public int getNumOutputs() {
+        return outputs.size();
+    }
+
     /**
      * Adds the given output to this transaction. The output must be completely initialized. Returns the given output.
      */

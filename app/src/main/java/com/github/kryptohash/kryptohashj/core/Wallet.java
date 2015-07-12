@@ -3564,7 +3564,7 @@ public class Wallet extends BaseTaggableObject implements Serializable, BlockCha
             }
 
             // Now shuffle the outputs to obfuscate which is the change.
-            if (req.shuffleOutputs)
+            if (req.shuffleOutputs && req.tx.getNumOutputs() > 1)
                 req.tx.shuffleOutputs();
 
             // Add sideChain and txTime
