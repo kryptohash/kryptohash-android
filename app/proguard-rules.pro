@@ -61,9 +61,10 @@
 -keep interface android.support.** { *; }
 -dontwarn android.support.v4.**
 
-# bitcoinj
+# kryptohashj
 -keep class com.github.kryptohash.kryptohashj.wallet.Protos$** { *; }
 -keep class org.bitcoin.protocols.payments.Protos$** { *; }
+-keep class javax.ws.rs.PathParam { *; }
 
 # Guava
 -dontwarn com.google.common.collect.MinMaxPriorityQueue

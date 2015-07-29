@@ -440,8 +440,8 @@ public class ExchangeRatesProvider extends ContentProvider
 	private Ticker fetchKHCticker() throws Exception {
 		Exchange exchange = ExchangeFactory.INSTANCE.createExchange(EmpoExExchange.class.getName());
 		PollingMarketDataService marketDataService = exchange.getPollingMarketDataService();
-		//return marketDataService.getTicker(new CurrencyPair("KHC", "BTC"));
-		return marketDataService.getTickerKHC();
+		return marketDataService.getTicker(new CurrencyPair("KHC", "BTC"));
+		//return marketDataService.getTickerKHC();
 	}
 
 	private ExchangeRate getKHCRate(ExchangeRate exchangeRate, double input) {
