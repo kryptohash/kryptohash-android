@@ -7,7 +7,7 @@ android {
         applicationId 'org.kryptohash.wallet'
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 204
+        versionCode 205
         versionName '1.05'
     }
     applicationVariants.all { variant ->
@@ -40,9 +40,9 @@ android {
         mainnet {
             applicationId 'org.kryptohash.wallet'
         }
-        //devnet {
-        //    applicationId 'org.kryptohash.wallet_test'
-        //}
+        devnet {
+            applicationId 'org.kryptohash.wallet_test'
+        }
     }
     compileOptions {
         encoding "UTF-8"
