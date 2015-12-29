@@ -40,7 +40,7 @@ public final class Constants
 	public static final NetworkParameters NETWORK_PARAMETERS = TEST ? TestNet3Params.get() : MainNetParams.get();
 
     /** Code-base version of main Bitcoin Wallet app for Android by Andreas Schildbach */
-    public static final double BITCOIN_WALLET_APP_CODE_BASE_VERSION = 1.04;
+    public static final double BITCOIN_WALLET_APP_CODE_BASE_VERSION = 1.05;
 
 	public final static class Files
 	{
